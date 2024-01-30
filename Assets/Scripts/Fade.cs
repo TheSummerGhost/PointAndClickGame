@@ -2,22 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CanvasGroup))]
-public class Fade : MonoBehaviour
+[RequireComponent(typeof(CanvasGroup))] //If this script is on an object, also give it a CanvasGroupComponent
+public class Fade : MonoBehaviour 
 {
     public float fadeTime = 0.25f;
     private CanvasGroup TheCanvas;
-
     public bool showing = false;
     public bool ShowOnStart = false;
 
-    void OnEnable()
+    void OnEnable() 
     {
         TheCanvas = GetComponent<CanvasGroup>();
     }
 
-    private void Awake() {
-        if (ShowOnStart == false) {
+    private void Awake() 
+    {
+        if (ShowOnStart == false) 
+        {
             TheCanvas = GetComponent<CanvasGroup>();
             ForceOff();
         } else {
@@ -25,33 +26,36 @@ public class Fade : MonoBehaviour
         }
     }
 
-    public void ForceOn() {
+    public void ForceOn() 
+    {
         gameObject.SetActive(true);
         TheCanvas.alpha = 1;
         showing = true;
         StopAllCoroutines();
     }
 
-    public void ForceOff() {
+    public void ForceOff() 
+    {
         gameObject.SetActive(false);
         TheCanvas.alpha = 0;
         showing = false;
         StopAllCoroutines();
     }
 
-    public void Toggle() {
-        if(showing) {
+    public void Toggle() 
+    {
+        if (showing) 
+        {
             Hide();
         } else {
             Show();
         }
     }
 
-    public void Show()
+    public void Show() 
     {
         if (!showing)
         {
-            
             gameObject.SetActive(true);
             StopAllCoroutines();
 
@@ -60,11 +64,11 @@ public class Fade : MonoBehaviour
         }
     }
 
-    public void Hide()
+    public void Hide() 
     {
-        if (showing)
+        if (showing) 
         {
-            if (gameObject.activeSelf == false)
+            if (gameObject.activeSelf == false) 
             {
                 return;
             }
@@ -75,21 +79,23 @@ public class Fade : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeTimeManager(float end)
+    public IEnumerator FadeTimeManager(float end) 
     {
 
         float Start = TheCanvas.alpha;
         float End = end;
 
-        for (float t = 0f; t < fadeTime; t += Time.deltaTime)
+        for (float t = 0f; t < fadeTime; t += Time.deltaTime) 
         {
             
             float normalizedTime = t / fadeTime;
             TheCanvas.alpha = Mathf.Lerp(Start, End, normalizedTime);
             yield return null;
         }
-
         TheCanvas.alpha = end;
-
+        if (end == 0) 
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

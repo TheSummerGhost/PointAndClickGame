@@ -6,12 +6,19 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
 
-    public void loadScene(string sceneName) {
+    public void LoadScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
     }
-    public void restartLevel() {
-        //save current inventory
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //load saved inventory
+    public void RestartLevel() {
+
+        if (GameManager.Instance != null)
+        {
+            Destroy(GameManager.Instance.gameObject);
+        }
+        if (InventoryManager.Instance != null)
+        {
+            Destroy(InventoryManager.Instance.gameObject);
+        }
+        SceneManager.LoadScene("FirstRoom");
     }
 }

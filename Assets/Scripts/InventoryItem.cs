@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class InventoryItem : ScriptableObject
 {
     public string itemName;
     public Sprite inventoryIcon;
-
-    public string description;
+    //public bool canInteract = true;
 }
 

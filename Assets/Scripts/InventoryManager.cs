@@ -24,15 +24,30 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public bool HasItem(InventoryItem item) {
+        if (System.Array.Exists(inventory, element => element == item))
+        {
+            return true;  
+        } else 
+        {
+            return false;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static InventoryManager Instance { get; private set; }
+    private void Awake() 
+    { 
+
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this.gameObject); 
+        } else 
+        { 
+            DontDestroyOnLoad(this.gameObject);
+            Instance = this;
+            foreach (InventorySlot i in inventorySlots) {
+            i.icon.sprite = null;
+            }
+        } 
     }
 }
